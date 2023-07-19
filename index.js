@@ -11,7 +11,7 @@ app.set("view engine", "ejs");
 app.set(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.render("layout");
+  res.sendFile(__dirname + "/public/index.html");
 });
 
 const users = {};
