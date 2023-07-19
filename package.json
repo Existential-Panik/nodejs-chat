@@ -1,0 +1,18 @@
+{
+  "name": "panik-socketio-chat",
+  "version": "0.0.1",
+  "main": "index.js",
+  "description": "first try at chat app with socket.io app",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "devStart": "nodemon index.js"
+  }
+}
