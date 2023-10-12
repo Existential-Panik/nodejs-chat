@@ -47,24 +47,35 @@
         color: #fff;
       }
 
-      #messages {
+      #messages,#typing {
         list-style-type: none;
         margin: 0;
         padding: 0;
       }
 
-      #messages > li {
+      #messages> li {
         padding: 0.5rem 1rem;
+      }
+#typing> li {
+        padding: 0.5rem 1rem;
+        background: #82c9d8;
       }
 
       #messages > li:nth-child(odd) {
         background: #efefef;
       }
+
+     .hidden{
+      display: none;
+     } 
     </style>
   </head>
 
   <body>
     <ul id="messages"></ul>
+    <ul id="typing" class="hidden">
+      <li> <span id="typingUser"></span> is typing...</li>
+    </ul>
 
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button>

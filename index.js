@@ -8,10 +8,11 @@ const path = require("path");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.set(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
+  //  res.sendFile(__dirname + "/public/index.html");
+  res.render("layout");
 });
 
 const users = {};
@@ -28,6 +29,14 @@ io.on("connection", (socket) => {
       name: users[socket.id],
     });
   });
+
+  socket.on("user-typing", (user) =>{
+    socket.broadcast.emit("typing-msg", user);
+  })
+
+  socket.on("stopTyping", () =>{
+    socket.broadcast.emit("stop-typing");
+  })
 
   socket.on("disconnect", (data) => {
     data = users[socket.id];

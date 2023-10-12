@@ -1,5 +1,7 @@
 var socket = io("http://localhost:3000");
 var messages = document.getElementById("messages");
+var typing = document.getElementById("typing");
+var typingUser = document.getElementById("typingUser");
 var form = document.getElementById("form");
 var input = document.getElementById("input");
 
@@ -19,6 +21,17 @@ form.addEventListener("submit", function (e) {
   }
 });
 
+//When user starts typing
+form.addEventListener("input", function () {
+  socket.emit("user-typing", username);
+});
+
+//When user stops typing
+input.addEventListener('blur', () => {
+  socket.emit('stopTyping');
+  console.log("Stoped Typing.")
+});
+
 //
 socket.on("user-connected", (name) => {
   appendMessage(`${name} has joined the chat.`);
@@ -32,9 +45,26 @@ socket.on("user-disconnect", (user) => {
   appendMessage(`${user} has been disconnected.`);
 });
 
+socket.on("typing-msg", (user) => {
+  typingMsg(user);
+})
+
+socket.on("stop-typing", () => {
+  removeTyping();
+})
+
 // Create new message list element
 function appendMessage(message) {
   const messageElem = document.createElement("li");
   messageElem.textContent = message;
   messages.append(messageElem);
+}
+
+function typingMsg(user) {
+  typingUser.textContent = `${user}`;
+  typing.classList.remove('hidden');
+}
+
+function removeTyping() {
+  typing.classList.add('hidden');
 }
